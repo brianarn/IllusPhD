@@ -7,7 +7,7 @@ dojo.require('dojox.gfx');
 dojo.ready(function(){
 	// Variables in here for cleaner scope
 	var container, guide, gwidth, gheight,
-		cx, cy,
+		cx, cy, offsetBScx, offsetBScy,
 		allKnown, elem, hs, bsGrp, bsBase, bsSpec, phdPre, phdPost,
 		rAll, rElem, rHS, rBS, rBSSpec, offsetBSSpec,
 		colElem, colHS, colBS, colMS;
@@ -33,17 +33,22 @@ dojo.ready(function(){
 	colBS = dojo.colorFromString('#f18a81');
 	rBSSpec = rAll * 0.08;
 	offsetBSSpec = rAll * 0.18;
+	offsetBScx = cx + offsetBSSpec;
+	offsetBScy = cy - offsetBSSpec;
 	colMS = dojo.colorFromString('#ef5f54');
 
 	// Draw the elements
-	bsBase = guide.createCircle({cx: cx, cy: cy, r: rBS}).setFill(colBS);
-	bsSpec = guide.createCircle({cx: cx + offsetBSSpec, cy: cy - offsetBSSpec, r: rBSSpec}).setFill(colBS);
 	bsGrp = guide.createGroup();
-	bsGrp.add(bsBase).add(bsSpec);
+	bsBase = bsGrp.createCircle({cx: cx, cy: cy, r: rBS}).setFill(colBS);
+	bsSpec = bsGrp.createCircle({cx: offsetBScx, cy: offsetBScy, r: rBSSpec}).setFill(colBS);
 	hs = guide.createCircle({cx: cx, cy: cy, r: rHS}).setFill(colHS);
 	elem = guide.createCircle({cx: cx, cy: cy, r: rElem}).setFill(colElem);
 	allKnown = guide.createCircle({cx: cx, cy: cy, r: rAll}).setStroke({color: 'black', width: 2});
-	window.elem = elem;
+
+	// Expose a thing or two for debugging
+	// TODO Remove these later
+	dojo.global.guide = guide;
+	dojo.global.bsGrp = bsGrp;
 
 	// We're done! Hide the loading, show the content
 	console.log('IllusPhD.init complete!');
