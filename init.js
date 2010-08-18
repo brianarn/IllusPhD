@@ -3,6 +3,7 @@ dojo.provide("IllusPhD.init");
 
 // Some requirements
 dojo.require('dojox.gfx');
+dojo.require('dojox.gfx.fx');
 
 dojo.ready(function(){
 	// Variables in here for cleaner scope
@@ -38,6 +39,13 @@ dojo.ready(function(){
 	colMS = dojo.colorFromString('#ef5f54');
 
 	// Draw the elements
+	ms = guide.createPath();
+	ms.setTransform([
+		dojox.gfx.matrix.translate(offsetBScx, offsetBScy),
+		dojox.gfx.matrix.rotateg(-135)
+	]);
+	ms.moveTo(-rBSSpec, 0).curveTo(-rBSSpec, rAll * 0.5, rBSSpec, rAll * 0.5, rBSSpec, 0);
+	ms.closePath().setFill(colMS);
 	bsGrp = guide.createGroup();
 	bsBase = bsGrp.createCircle({cx: cx, cy: cy, r: rBS}).setFill(colBS);
 	bsSpec = bsGrp.createCircle({cx: offsetBScx, cy: offsetBScy, r: rBSSpec}).setFill(colBS);
